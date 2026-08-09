@@ -1,0 +1,20 @@
+name: CD Deploy Compose
+on:
+  workflow_run:
+    workflows: ["CI Build Test Image"]
+    types: [completed]
+  workflow_dispatch:
+jobs:
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+      - name: Pull latest image
+        run: docker pull ghcr.io/${{ github.repository }}/catdog-mlops:latest
+      - name: Deploy Docker Compose
+        run: |
+          docker tag ghcr.io/${{ github.repository }}/catdog-mlops:latest catdog-mlops:local
+          docker compose -f deployment/docker-compose/docker-compose.yml up -d
+      - name: Smoke health
+        run: curl -f http://localhost:8000/health
