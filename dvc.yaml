@@ -1,0 +1,27 @@
+stages:
+  preprocess:
+    cmd: python -m src.data.preprocess --config configs.yaml
+    deps:
+      - src/data/preprocess.py
+      - data/raw
+    params:
+      - preprocess.image_size
+      - preprocess.train_ratio
+      - preprocess.val_ratio
+      - preprocess.test_ratio
+    outs:
+      - data/processed
+  train:
+    cmd: python -m src.ml.train --config configs.yaml
+    deps:
+      - src/ml/train.py
+      - src/ml/model.py
+      - data/processed
+    params:
+      - train.epochs
+      - train.batch_size
+      - train.learning_rate
+    outs:
+      - models/catdog_cnn.pt
+    metrics:
+      - reports/metrics.json

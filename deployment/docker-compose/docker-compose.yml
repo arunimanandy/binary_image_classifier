@@ -1,0 +1,9 @@
+services:
+  catdog-api:
+    image: catdog-mlops:local
+    build:
+      context: ../..
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    restart: unless-stopped

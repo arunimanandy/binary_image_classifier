@@ -1,0 +1,33 @@
+{
+  "project": "mlops_assignment2_project",
+  "file_count": 27,
+  "files": [
+    ".github/workflows/cd.yml",
+    ".github/workflows/ci.yml",
+    ".gitignore",
+    "Dockerfile",
+    "README.md",
+    "configs.yaml",
+    "deployment/docker-compose/docker-compose.yml",
+    "deployment/kubernetes/deployment.yaml",
+    "dvc.yaml",
+    "models/.gitkeep",
+    "models/README.md",
+    "notebooks/README.md",
+    "params.yaml",
+    "requirements.txt",
+    "scripts/download_data.sh",
+    "scripts/smoke_test.py",
+    "src/__init__.py",
+    "src/api/__init__.py",
+    "src/api/main.py",
+    "src/data/__init__.py",
+    "src/data/preprocess.py",
+    "src/ml/__init__.py",
+    "src/ml/inference.py",
+    "src/ml/model.py",
+    "src/ml/train.py",
+    "tests/test_inference.py",
+    "tests/test_preprocess.py"
+  ]
+}

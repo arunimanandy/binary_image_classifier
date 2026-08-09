@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catdog-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: catdog-api
+  template:
+    metadata:
+      labels:
+        app: catdog-api
+    spec:
+      containers:
+      - name: catdog-api
+        image: ghcr.io/OWNER/REPO/catdog-mlops:latest
+        ports:
+        - containerPort: 8000
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: catdog-api-service
+spec:
+  selector:
+    app: catdog-api
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8000
+  type: ClusterIP
