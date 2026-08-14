@@ -16,5 +16,23 @@ jobs:
         run: |
           docker tag ghcr.io/${{ github.repository }}/catdog-mlops:latest catdog-mlops:local
           docker compose -f deployment/docker-compose/docker-compose.yml up -d
+      - name: Check running containers
+        run: docker ps -a
+      - name: Show Docker logs
+        run: docker compose -f deployment/docker-compose/docker-compose.yml logs --no-color
+          
       - name: Smoke health
-        run: curl -f http://localhost:8000/health
+        run: |
+          for i in {1..30}; do
+            echo "Checking health attempt $i..."
+            if curl -f http://localhost:8000/health; then
+              echo "Application is healthy"
+              exit 0
+            fi
+            sleep 5
+          done
+
+          echo "Application did not become healthy"
+          docker ps -a
+          docker compose -f deployment/docker-compose/docker-compose.yml logs --no-color
+          exit 1
