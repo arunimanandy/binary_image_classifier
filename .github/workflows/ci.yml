@@ -31,5 +31,4 @@ jobs:
       - name: Build Docker image
         run: docker build -t ghcr.io/${{ github.repository }}/catdog-mlops:${{ github.sha }} -t ghcr.io/${{ github.repository }}/catdog-mlops:latest .
       - name: Publish Docker image
-        if: github.event_name == 'push'
-        run: docker push --all-tags ghcr.io/${{ github.repository }}/catdog-mlops
+        run: docker push ghcr.io/${{ github.repository }}/catdog-mlops:latest
