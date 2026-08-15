@@ -147,25 +147,3 @@ cd ../..
 python scripts/smoke_test.py --url http://localhost:8000 --image data/processed/test/cat/<image-name>.jpg
 ```
 
-## GitHub Actions secrets
-
-For image publishing to GitHub Container Registry:
-
-- `GITHUB_TOKEN` is automatically available in GitHub Actions.
-- Set repository package write permissions under GitHub Actions settings.
-
-For Docker Hub, change the registry variables in `.github/workflows/ci.yml` and add:
-
-- `DOCKERHUB_USERNAME`
-- `DOCKERHUB_TOKEN`
-
-## Screen recording checklist under 5 minutes
-
-1. Show repository structure.
-2. Run preprocessing command or show DVC-tracked data files.
-3. Run model training and show MLflow run metrics/artifacts.
-4. Run pytest.
-5. Build Docker image.
-6. Deploy using Docker Compose.
-7. Call `/health` and `/predict`.
-8. Show `/metrics` request count and latency.
